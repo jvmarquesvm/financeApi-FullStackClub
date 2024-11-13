@@ -8,7 +8,6 @@ export const getDashboard = async (month: string) => {
   if (!userId) {
     throw new Error("Unauthorized");
   }
-
   const where = {
     userId,
     date: {
@@ -16,7 +15,6 @@ export const getDashboard = async (month: string) => {
       lt: new Date(`2024-${month}-31`),
     },
   };
-
   const depositsTotal = Number(
     (
       await db.transaction.aggregate({
@@ -91,6 +89,6 @@ export const getDashboard = async (month: string) => {
     expensesTotal,
     typesPercentage,
     totalExpensePerCategory,
-    lastTransactions,
+    lastTransactions: JSON.parse(JSON.stringify(lastTransactions)),
   };
 };
